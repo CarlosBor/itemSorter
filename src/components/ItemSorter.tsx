@@ -1,6 +1,7 @@
 import SelectableProperties from './SelectableProperties';
 import ItemSorterGrid from './ItemSorterGrid';
 import { useReducer } from 'react';
+import style from './ItemSorter.module.css';
 
 const initialState = {};
 
@@ -46,19 +47,23 @@ const ItemSorter = (props) => {
 
   return (
     <>
-        {Object.keys(props.items[0]).map((key, index) => {
-          return (
-              <>
-              <h4 key={`header-${index}`}>{key}</h4>
-              <SelectableProperties
-                  key={`selectable-${index}`}
-                  items={props.items}
-                  property={key}
-                  onCheckboxChange={handleCheckboxChange(key)}
-              />
-              </>
-          );
-        })}
+        <div className={style.sidebar}>
+          <h3>Sidebar</h3>
+          {Object.keys(props.items[0]).map((key, index) => {
+            return (
+                <>
+                <h4 key={`header-${index}`}>{key}</h4>
+                <SelectableProperties
+                    key={`selectable-${index}`}
+                    items={props.items}
+                    property={key}
+                    onCheckboxChange={handleCheckboxChange(key)}
+                />
+                </>
+            );
+          })}
+        </div>
+
         <ItemSorterGrid 
           items={props.items}
           filter={state}
