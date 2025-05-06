@@ -1,9 +1,7 @@
-import react from 'react';
 import ItemSorter from './components/ItemSorter';
 
 function App() {
-
-  const mockData = [
+    const mockData = [
     { "size": "M", "color": "Blue", "brand": "Uniqlo", "price": 19.99, "style": "Casual" },
     { "size": "L", "color": "Black", "brand": "H&M", "price": 24.50, "style": "Formal" },
     { "size": "S", "color": "White", "brand": "Zara", "price": 29.99, "style": "Streetwear" },
@@ -15,10 +13,17 @@ function App() {
     { "size": "M", "color": "Pink", "brand": "Forever 21", "price": 18.00, "style": "Trendy" },
     { "size": "L", "color": "Brown", "brand": "Old Navy", "price": 20.49, "style": "Basic" }
   ]
-  
+  const orderFunction = ( ) =>{
+    return "whew";
+  }
+
   return (
     <>
-      <ItemSorter items={mockData} />
+      <ItemSorter 
+      items={mockData}
+      rangeFields={["price"]}
+      // orderFields={[{field:"price", order:orderFunction}]}
+      />
     </>
   )
 }
