@@ -71,7 +71,7 @@ function App() {
   return (
     <>
       <ItemSorter 
-        items={mockPlants}
+        items={mockData}
         // rangeFields={["price"]}
         // orderFields={{"size" : orderFunction}}
         // explicitFields = {["size", "price", "brand"]}

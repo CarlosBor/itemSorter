@@ -133,13 +133,14 @@ const ItemSorter: React.FC<ItemSorterProps> =
             className={`${styles.searchInput} ${inputClassName}`}
           />)}
         {Object.keys(items[0]).map((key, index) => {
+          if(imageUrl==key){
+            return;
+          }
           return (
             <div key={`section-${index}`} className={`${styles.section} ${sectionClassName}`}>
              <h4>{capitalizeFirstLetter(key)}</h4>
               {(() => {
-                if(imageUrl==key){
-                  return;
-                }
+
                 if (rangeFields.includes(key)) {
                   const minValue = Math.min(...items.map((item) => item[key]));
                   const maxValue = Math.max(...items.map((item) => item[key]));

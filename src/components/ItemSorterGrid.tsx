@@ -44,7 +44,8 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
             const keys = Object.keys(item);
             return (
               <div className={`${style.itemCard} ${cardClassName}`} key={`item-${index}`}>
-                {keys.map((key) => (
+                {keys.includes(imageUrl) && <img src={item[imageUrl]} alt="" />}
+                {keys.filter(key => key !== imageUrl).map((key) => (
                   <p className={datapointClassName} key={key}> {capitalizeFirstLetter(key)} : {renderBool(item[key])}</p>
                 ))}
               </div>
