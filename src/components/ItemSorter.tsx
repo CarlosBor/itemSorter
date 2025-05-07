@@ -5,9 +5,23 @@ import capitalizeFirstLetter from '../utils/capitalizeFirst';
 import style from './ItemSorter.module.css';
 import { Range } from "react-range";
 
-const initialState = {};
+const initialState: FilterState = {};
 
-function reducer(state, action) {
+interface FilterState {
+  [key: string]: string[] | number[];
+}
+
+type ItemList = Record<string, any>[];
+interface ItemSorterProps {
+  items: ItemList;
+  rangeFields?: string[];
+}
+
+type Action =
+  | { type: "SET_FIELD"; property: string; value: boolean; itemValue: string }
+  | { type: "SET_FIELD"; property: string; value: boolean; itemValue: number[] };
+
+function reducer(state: FilterState, action:Action) {
   switch (action.type) {
     case 'SET_FIELD': {
       const { property, value, itemValue } = action;
@@ -16,18 +30,18 @@ function reducer(state, action) {
       if (Array.isArray(itemValue)) {
         // For range filters, store the range array
         updatedState[property] = itemValue;
-      } else {
+      } else if (typeof itemValue ==="string"){
         // For checkbox-style filters, store the selected values
         if (value) {
           if (!updatedState[property]) {
             updatedState[property] = [];
           }
-          if (!updatedState[property].includes(itemValue)) {
-            updatedState[property].push(itemValue);
+          if (!(updatedState[property] as string[]).includes(itemValue)) {
+            (updatedState[property] as string[]).push(itemValue);
           }
         } else {
           if (updatedState[property]) {
-            updatedState[property] = updatedState[property].filter(
+            updatedState[property] = (updatedState[property] as string[]).filter(
               (item) => item !== itemValue
             );
             if (updatedState[property].length === 0) {
@@ -43,15 +57,15 @@ function reducer(state, action) {
   }
 }
 
-const ItemSorter = ({ items, rangeFields = []}) => {
+const ItemSorter: React.FC<ItemSorterProps> = ({ items, rangeFields = []}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const handleCheckboxChange = (field) => (e) => {
+  const handleCheckboxChange = (field:string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: 'SET_FIELD',
-      property: field,
-      value: e.target.checked,
-      itemValue: e.target.value,
+      property: field, //Such as size
+      value: e.target.checked, //True or false
+      itemValue: e.target.value, //XS, S, M, L, XL
     });
   };
 
@@ -69,16 +83,16 @@ const ItemSorter = ({ items, rangeFields = []}) => {
                   const maxValue = Math.max(...items.map((item) => item[key]));
                   return (
                     <Range
-                      values={state[key] || [minValue, maxValue]}
+                      values={state[key] as number[] || [minValue, maxValue]}
                       step={1}
                       min={minValue}
                       max={maxValue}
                       onChange={(values) => {
                         dispatch({
                           type: 'SET_FIELD',
-                          property: key,
+                          property: key, //Such as price
                           value: true,
-                          itemValue: values,
+                          itemValue: values, //Array of min and max
                         });
                       }}
                       renderTrack={({ props, children }) => (

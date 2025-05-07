@@ -1,6 +1,10 @@
 import style from './ItemSorterGrid.module.css';
 
-const ItemSorterGrid = ({ items, filter }) =>{
+interface ItemSorterGridProps {
+  items: Record<string, any>[];
+  filter: Record<string, any>;
+}
+const ItemSorterGrid: React.FC<ItemSorterGridProps> = ({ items, filter }) =>{
 
   const filteredItems = items.filter((item) => {
     return Object.keys(filter).every((key) => {
@@ -17,7 +21,7 @@ const ItemSorterGrid = ({ items, filter }) =>{
 
     return (
         <div className={style.itemGrid}>
-          {filteredItems.map((item, index) => {
+          {filteredItems.map((item, index:number) => {
             const keys = Object.keys(item);
             return (
               <div className={style.itemCard} key={`item-${index}`}>
