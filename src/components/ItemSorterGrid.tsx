@@ -5,19 +5,27 @@ interface ItemSorterGridProps {
   filter: Record<string, any>;
 }
 const ItemSorterGrid: React.FC<ItemSorterGridProps> = ({ items, filter }) =>{
-
-  const filteredItems = items.filter((item) => {
+  let filteredItems = items.filter((item) => {
     return Object.keys(filter).every((key) => {
+      if (key === "search") return true;
       const criterion = filter[key];
-
       if (Array.isArray(criterion) && criterion.length === 2 && typeof criterion[0] === "number") {
         const [min, max] = criterion;
         return item[key] >= min && item[key] <= max;
       }
-
       return Array.isArray(criterion) && criterion.includes(item[key]+"");
     });
   });
+
+  if (filter["search"]) {
+    const searchTerm = filter["search"].toLowerCase();
+    console.log(searchTerm);
+    filteredItems = filteredItems.filter((item) => {
+      return Object.values(item).some((value) => {
+        return typeof value === "string" && value.toLowerCase().includes(searchTerm);  // <-- Added return statement here
+      });
+    });
+  }
 
     return (
         <div className={style.itemGrid}>

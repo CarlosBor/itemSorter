@@ -8,30 +8,32 @@ import { Range } from "react-range";
 const initialState: FilterState = {};
 
 interface FilterState {
-  [key: string]: string[] | number[];
+  [key: string]: string[] | number[] | string;
 }
 
 type ItemList = Record<string, any>[];
 interface ItemSorterProps {
   items: ItemList;
   rangeFields?: string[];
+  orderFields?: Record<string, Function>;
+  explicitFields?: string[];
+  textSearch?: boolean;
 }
 
 type Action =
   | { type: "SET_FIELD"; property: string; value: boolean; itemValue: string }
-  | { type: "SET_FIELD"; property: string; value: boolean; itemValue: number[] };
+  | { type: "SET_FIELD"; property: string; value: boolean; itemValue: number[] }
+  | { type: "SET_SEARCH"; query: string };
 
-function reducer(state: FilterState, action:Action) {
+function reducer(state: FilterState, action: Action) {
   switch (action.type) {
     case 'SET_FIELD': {
       const { property, value, itemValue } = action;
       const updatedState = { ...state };
 
       if (Array.isArray(itemValue)) {
-        // For range filters, store the range array
         updatedState[property] = itemValue;
-      } else if (typeof itemValue ==="string"){
-        // For checkbox-style filters, store the selected values
+      } else if (typeof itemValue === "string") {
         if (value) {
           if (!updatedState[property]) {
             updatedState[property] = [];
@@ -52,13 +54,39 @@ function reducer(state: FilterState, action:Action) {
       }
       return updatedState;
     }
+    case 'SET_SEARCH': {
+      const { query } = action;
+      const updatedState = { ...state };
+      updatedState['search'] = query;
+      if (query === "") {
+        delete updatedState['search'];
+      }
+      return updatedState;
+    }
     default:
       return state;
   }
 }
 
-const ItemSorter: React.FC<ItemSorterProps> = ({ items, rangeFields = []}) => {
+
+const ItemSorter: React.FC<ItemSorterProps> = 
+({ items,
+   rangeFields = [],
+   orderFields = [],
+   explicitFields = null,
+   textSearch=false}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  if(explicitFields != null){
+    items = items.map((item) => {
+        Object.keys(item).forEach((key)=>{
+          if(explicitFields.indexOf(key)==-1){
+            delete item[key];
+          }
+        })
+      return item;
+    })
+  }
 
   const handleCheckboxChange = (field:string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -69,10 +97,18 @@ const ItemSorter: React.FC<ItemSorterProps> = ({ items, rangeFields = []}) => {
     });
   };
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'SET_SEARCH',
+      query: e.target.value, //True or false
+    });
+  };
+
   return (
     <>
       <div className={style.sidebar}>
         <h3>Sidebar</h3>
+        {textSearch && <input onChange={handleSearchChange} placeholder="Search..."/>}
         {Object.keys(items[0]).map((key, index) => {
           return (
             <div key={`section-${index}`}>
@@ -132,6 +168,8 @@ const ItemSorter: React.FC<ItemSorterProps> = ({ items, rangeFields = []}) => {
                     items={items}
                     property={key}
                     onCheckboxChange={handleCheckboxChange(key)}
+                    // @ts-ignore
+                    sortFunction={orderFields[key] || null}
                   />
                 );
               })()}
@@ -139,7 +177,10 @@ const ItemSorter: React.FC<ItemSorterProps> = ({ items, rangeFields = []}) => {
           );
         })}
       </div>
-      <ItemSorterGrid items={items} filter={state} />
+      <ItemSorterGrid
+        items={items}
+        filter={state}
+      />
     </>
   );
 }

@@ -13,16 +13,25 @@ function App() {
     { "size": "M", "color": "Pink", "brand": "Forever 21", "price": 18.00, "style": "Trendy" },
     { "size": "L", "color": "Brown", "brand": "Old Navy", "price": 20.49, "style": "Basic" }
   ]
-  const orderFunction = ( ) =>{
-    return "whew";
+  const orderFunction = (a:string, b:string) =>{
+    const sizeOrder = ["XS", "S", "M", "L", "XL"];
+    if(sizeOrder.indexOf(a) < sizeOrder.indexOf(b)){
+      return -1;
+    }else if (sizeOrder.indexOf(b) < sizeOrder.indexOf(a)){
+      return 1;
+    }else{
+      return 0;
+    }
   }
 
   return (
     <>
       <ItemSorter 
       items={mockData}
-      rangeFields={["price"]}
-      // orderFields={[{field:"price", order:orderFunction}]}
+      // rangeFields={["price"]}
+      // orderFields={{"size" : orderFunction}}
+      // explicitFields = {["size", "price", "brand"]}
+      // textSearch = {true}
       />
     </>
   )

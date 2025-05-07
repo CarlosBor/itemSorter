@@ -1,7 +1,16 @@
-import react from 'react';
 
-const SelectableProperties = ({ items, property, onCheckboxChange }) => {
+interface SelectablePropertiesProps {
+  items: Record<string, any>[];
+  property: string;
+  onCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  sortFunction?: (a: any, b: any) => number;
+}
+
+const SelectableProperties:React.FC<SelectablePropertiesProps> = ({ items, property, onCheckboxChange, sortFunction }) => {
   const propertiesArray = [...new Set(items.map((item) => item[property]))];
+  if(sortFunction!=null){
+    propertiesArray.sort(sortFunction);
+  }
 
   return (
     propertiesArray.map((value, index) => {
