@@ -1,5 +1,6 @@
 import style from './ItemSorterGrid.module.css';
 import capitalizeFirstLetter from '../utils/capitalizeFirst';
+import renderBool from '../utils/renderBool';
 interface ItemSorterGridProps {
   items: Record<string, any>[];
   filter: Record<string, any>;
@@ -43,7 +44,7 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
             return (
               <div className={`${style.itemCard} ${cardClassName}`} key={`item-${index}`}>
                 {keys.map((key) => (
-                  <p className={datapointClassName} key={key}> {capitalizeFirstLetter(key)} : {item[key]}</p>
+                  <p className={datapointClassName} key={key}> {capitalizeFirstLetter(key)} : {renderBool(item[key])}</p>
                 ))}
               </div>
             );

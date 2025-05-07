@@ -1,3 +1,4 @@
+import renderBool from "../utils/renderBool";
 
 interface SelectablePropertiesProps {
   items: Record<string, any>[];
@@ -28,7 +29,7 @@ const SelectableProperties:React.FC<SelectablePropertiesProps> =
             value={value}
             onChange={onCheckboxChange} 
           />
-          <span>{value}</span>
+          <span>{renderBool(value)}</span>
         </label>
       );
     })
