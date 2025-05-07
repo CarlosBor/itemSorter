@@ -7,13 +7,15 @@ interface ItemSorterGridProps {
   gridClassName: string;
   cardClassName: string;
   datapointClassName: string;
+  imageUrl:string;
 }
 const ItemSorterGrid: React.FC<ItemSorterGridProps> =
  ({ items,
    filter,
    gridClassName="",
    cardClassName="",
-   datapointClassName=""
+   datapointClassName="",
+   imageUrl=""
   }) => {
   let filteredItems = items.filter((item) => {
     return Object.keys(filter).every((key) => {
@@ -29,7 +31,6 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
 
   if (filter["search"]) {
     const searchTerm = filter["search"].toLowerCase();
-    console.log(searchTerm);
     filteredItems = filteredItems.filter((item) => {
       return Object.values(item).some((value) => {
         return typeof value === "string" && value.toLowerCase().includes(searchTerm);  // <-- Added return statement here

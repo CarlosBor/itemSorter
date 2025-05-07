@@ -19,6 +19,7 @@ interface ItemSorterProps {
   orderFields?: Record<string, Function>;
   explicitFields?: string[];
   textSearch?: boolean;
+  imageUrl?: string;
   className?: string;
   sidebarClassName?: string;
   sectionClassName?: string;
@@ -83,6 +84,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
    orderFields = [],
    explicitFields = null,
    textSearch = false,
+   imageUrl = "",
    className = "",
    sidebarClassName = "",
    sectionClassName = "",
@@ -90,7 +92,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
    gridClassName = "",
    cardClassName = "",
    datapointClassName = "",
-   checkboxClassName = ""
+   checkboxClassName = "",
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -135,6 +137,9 @@ const ItemSorter: React.FC<ItemSorterProps> =
             <div key={`section-${index}`} className={`${styles.section} ${sectionClassName}`}>
              <h4>{capitalizeFirstLetter(key)}</h4>
               {(() => {
+                if(imageUrl==key){
+                  return;
+                }
                 if (rangeFields.includes(key)) {
                   const minValue = Math.min(...items.map((item) => item[key]));
                   const maxValue = Math.max(...items.map((item) => item[key]));
@@ -201,6 +206,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
       <ItemSorterGrid 
         items={items} 
         filter={state}
+        imageUrl={imageUrl}
         gridClassName={gridClassName}
         cardClassName={cardClassName}
         datapointClassName={datapointClassName}
