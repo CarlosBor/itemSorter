@@ -1,4 +1,7 @@
-1- Apply style with a default color or allow users to establish all styles.
-2- Colors in color option
-3- Handle errors in general
-4- Add an image field
+- Apply style with a default color or allow users to establish all styles. sorta done
+- Colors in color option
+- Handle errors in general
+- Add an image field
+- Take into account bools
+- Field filter blacklist
+- Treat data with a function before render

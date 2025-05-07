@@ -1,10 +1,19 @@
 import style from './ItemSorterGrid.module.css';
-
+import capitalizeFirstLetter from '../utils/capitalizeFirst';
 interface ItemSorterGridProps {
   items: Record<string, any>[];
   filter: Record<string, any>;
+  gridClassName: string;
+  cardClassName: string;
+  datapointClassName: string;
 }
-const ItemSorterGrid: React.FC<ItemSorterGridProps> = ({ items, filter }) =>{
+const ItemSorterGrid: React.FC<ItemSorterGridProps> =
+ ({ items,
+   filter,
+   gridClassName="",
+   cardClassName="",
+   datapointClassName=""
+  }) => {
   let filteredItems = items.filter((item) => {
     return Object.keys(filter).every((key) => {
       if (key === "search") return true;
@@ -28,13 +37,13 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> = ({ items, filter }) =>{
   }
 
     return (
-        <div className={style.itemGrid}>
+        <div className={`${style.itemGrid} ${gridClassName}`}>
           {filteredItems.map((item, index:number) => {
             const keys = Object.keys(item);
             return (
-              <div className={style.itemCard} key={`item-${index}`}>
+              <div className={`${style.itemCard} ${cardClassName}`} key={`item-${index}`}>
                 {keys.map((key) => (
-                  <p key={key}>{key} : {item[key]}</p>
+                  <p className={datapointClassName} key={key}> {capitalizeFirstLetter(key)} : {item[key]}</p>
                 ))}
               </div>
             );

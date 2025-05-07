@@ -2,8 +2,8 @@ import SelectableProperties from './SelectableProperties';
 import ItemSorterGrid from './ItemSorterGrid';
 import { useReducer } from 'react';
 import capitalizeFirstLetter from '../utils/capitalizeFirst';
-import style from './ItemSorter.module.css';
 import { Range } from "react-range";
+import styles from './ItemSorter.module.css';
 
 const initialState: FilterState = {};
 
@@ -12,12 +12,21 @@ interface FilterState {
 }
 
 type ItemList = Record<string, any>[];
+
 interface ItemSorterProps {
   items: ItemList;
   rangeFields?: string[];
   orderFields?: Record<string, Function>;
   explicitFields?: string[];
   textSearch?: boolean;
+  className?: string;
+  sidebarClassName?: string;
+  sectionClassName?: string;
+  inputClassName?: string;
+  gridClassName?: string;
+  cardClassName?: string;
+  datapointClassName?: string;
+  checkboxClassName?: string;
 }
 
 type Action =
@@ -68,51 +77,63 @@ function reducer(state: FilterState, action: Action) {
   }
 }
 
-
 const ItemSorter: React.FC<ItemSorterProps> = 
 ({ items,
    rangeFields = [],
    orderFields = [],
    explicitFields = null,
-   textSearch=false}) => {
+   textSearch = false,
+   className = "",
+   sidebarClassName = "",
+   sectionClassName = "",
+   inputClassName = "",
+   gridClassName = "",
+   cardClassName = "",
+   datapointClassName = "",
+   checkboxClassName = ""
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   if(explicitFields != null){
     items = items.map((item) => {
         Object.keys(item).forEach((key)=>{
-          if(explicitFields.indexOf(key)==-1){
+          if(explicitFields.indexOf(key) == -1){
             delete item[key];
           }
         })
       return item;
-    })
+    });
   }
 
-  const handleCheckboxChange = (field:string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckboxChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: 'SET_FIELD',
-      property: field, //Such as size
-      value: e.target.checked, //True or false
-      itemValue: e.target.value, //XS, S, M, L, XL
+      property: field,
+      value: e.target.checked,
+      itemValue: e.target.value,
     });
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: 'SET_SEARCH',
-      query: e.target.value, //True or false
+      query: e.target.value,
     });
   };
 
   return (
-    <>
-      <div className={style.sidebar}>
-        <h3>Sidebar</h3>
-        {textSearch && <input onChange={handleSearchChange} placeholder="Search..."/>}
+    <div className={`${styles.container} ${className}`}>
+      <div className={`${styles.sidebar} ${sidebarClassName}`}>
+        <h3>Filters</h3>
+        {textSearch && (
+          <input
+            placeholder="Search..."
+            className={`${styles.searchInput} ${inputClassName}`}
+          />)}
         {Object.keys(items[0]).map((key, index) => {
           return (
-            <div key={`section-${index}`}>
-              <h4>{capitalizeFirstLetter(key)}</h4>
+            <div key={`section-${index}`} className={`${styles.section} ${sectionClassName}`}>
+             <h4>{capitalizeFirstLetter(key)}</h4>
               {(() => {
                 if (rangeFields.includes(key)) {
                   const minValue = Math.min(...items.map((item) => item[key]));
@@ -126,9 +147,9 @@ const ItemSorter: React.FC<ItemSorterProps> =
                       onChange={(values) => {
                         dispatch({
                           type: 'SET_FIELD',
-                          property: key, //Such as price
+                          property: key,
                           value: true,
-                          itemValue: values, //Array of min and max
+                          itemValue: values,
                         });
                       }}
                       renderTrack={({ props, children }) => (
@@ -147,7 +168,6 @@ const ItemSorter: React.FC<ItemSorterProps> =
                       renderThumb={({ props, value }) => (
                         <div
                           {...props}
-                          key={props.key}
                           style={{
                             ...props.style,
                             height: "42px",
@@ -168,8 +188,9 @@ const ItemSorter: React.FC<ItemSorterProps> =
                     items={items}
                     property={key}
                     onCheckboxChange={handleCheckboxChange(key)}
-                    // @ts-ignore
+                    //@ts-ignore
                     sortFunction={orderFields[key] || null}
+                    checkboxClassName={checkboxClassName}
                   />
                 );
               })()}
@@ -177,12 +198,15 @@ const ItemSorter: React.FC<ItemSorterProps> =
           );
         })}
       </div>
-      <ItemSorterGrid
-        items={items}
+      <ItemSorterGrid 
+        items={items} 
         filter={state}
+        gridClassName={gridClassName}
+        cardClassName={cardClassName}
+        datapointClassName={datapointClassName}
       />
-    </>
+    </div>
   );
-}
+};
 
 export default ItemSorter;
