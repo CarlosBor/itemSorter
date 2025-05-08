@@ -22,6 +22,7 @@ interface ItemSorterProps {
   imageUrl?: string;
   parseOutput?: Record<string, Function>;
   className?: string;
+  cardFunction?: Function;
   sidebarClassName?: string;
   sectionClassName?: string;
   inputClassName?: string;
@@ -86,6 +87,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
    explicitFields = null,
    textSearch = false,
    imageUrl = "",
+   cardFunction = null,
    parseOutput = {},
    className = "",
    sidebarClassName = "",
@@ -166,7 +168,8 @@ const ItemSorter: React.FC<ItemSorterProps> =
                           style={{
                             ...props.style,
                             height: "6px",
-                            width: "100%",
+                            width: "90%",
+                            margin: "auto",
                             backgroundColor: "#ccc",
                           }}
                         >
@@ -181,6 +184,10 @@ const ItemSorter: React.FC<ItemSorterProps> =
                             height: "42px",
                             width: "42px",
                             backgroundColor: "#999",
+                            borderRadius: "30px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
                           }}
                         >
                           <span>{value}</span>  
@@ -212,6 +219,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
         filter={state}
         imageUrl={imageUrl}
         parseOutput={parseOutput}
+        cardFunction={cardFunction}
         gridClassName={gridClassName}
         cardClassName={cardClassName}
         datapointClassName={datapointClassName}

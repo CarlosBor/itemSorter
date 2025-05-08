@@ -72,16 +72,21 @@ function App() {
     return price + "€";
   }
 
+  const cardFunction = (item : any) => {
+    console.log(item);
+  }
+  
   return (
     <>
       <ItemSorter 
         items={mockData}
-        // rangeFields={["price"]}
-        // orderFields={{"size" : orderFunction}}
-        // explicitFields = {["size", "price", "brand", "imgUrl"]}
+        rangeFields={["price"]}
+        orderFields={{"size" : orderFunction}}
+        explicitFields = {["size", "price", "brand", "imgUrl"]}
         textSearch = {true}
-        // parseOutput = {{"price" : addEuro}}
-        // imageUrl = "imgUrl"
+        parseOutput = {{"price" : addEuro}}
+        imageUrl = "imgUrl"
+        cardFunction = {cardFunction}
         className="sorter-custom-container"
         sidebarClassName="sorter-custom-sidebar"
         sectionClassName="sorter-custom-section"

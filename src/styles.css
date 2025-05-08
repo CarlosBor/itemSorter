@@ -59,3 +59,12 @@
   .sorter-custom-checkbox input:checked + span:hover {
     background-color: #005bb5;
   }
+
+  .grid-thumbnail{
+    width:100%;
+  }
+
+.sorter-custom-datapoint{
+  display:flex;
+  justify-content: space-between;
+}

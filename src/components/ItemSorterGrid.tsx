@@ -5,10 +5,11 @@ interface ItemSorterGridProps {
   items: Record<string, any>[];
   filter: Record<string, any>;
   parseOutput?: Record<string, Function>;
-  gridClassName: string;
-  cardClassName: string;
-  datapointClassName: string;
-  imageUrl:string;
+  gridClassName?: string;
+  cardClassName?: string;
+  datapointClassName?: string;
+  imageUrl?:string;
+  cardFunction?:Function;
 }
 const ItemSorterGrid: React.FC<ItemSorterGridProps> =
  ({ items,
@@ -17,7 +18,8 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
    cardClassName="",
    datapointClassName="",
    imageUrl="",
-   parseOutput  = {}
+   parseOutput  = {},
+   cardFunction=null
   }) => {
   let filteredItems = items.filter((item) => {
     return Object.keys(filter).every((key) => {
@@ -35,7 +37,7 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
     const searchTerm = filter["search"].toLowerCase();
     filteredItems = filteredItems.filter((item) => {
       return Object.values(item).some((value) => {
-        return typeof value === "string" && value.toLowerCase().includes(searchTerm);  // <-- Added return statement here
+        return typeof value === "string" && value.toLowerCase().includes(searchTerm);
       });
     });
   }
@@ -45,17 +47,19 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
           {filteredItems.map((item, index:number) => {
             const keys = Object.keys(item);
             return (
-              <div className={`${style.itemCard} ${cardClassName}`} key={`item-${index}`}>
-                {keys.includes(imageUrl) && <img src={item[imageUrl]} alt="" />}
+              <div onClick={cardFunction && (() => cardFunction(item))} className={`${style.itemCard} ${cardClassName}`} key={`item-${index}`}>
+                {keys.includes(imageUrl) && <img className="grid-thumbnail" src={item[imageUrl]} alt="" />}
                 {keys.filter(key => key !== imageUrl).map((key) => (
-                  <p className={datapointClassName} key={key}> {capitalizeFirstLetter(key)} : {parseOutput[key] ? parseOutput[key](renderBool(item[key])) : renderBool(item[key])}</p>
+                  <p className={datapointClassName} key={key}>
+                     <span>{capitalizeFirstLetter(key)}: </span> 
+                     <span>{parseOutput[key] ? parseOutput[key](renderBool(item[key])) : renderBool(item[key])}</span>
+                  </p>
                 ))}
               </div>
             );
           })}
         </div>
       );
-      
 }
 
 export default ItemSorterGrid;
