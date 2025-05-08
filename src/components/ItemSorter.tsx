@@ -24,12 +24,14 @@ interface ItemSorterProps {
   className?: string;
   cardFunction?: Function;
   sidebarClassName?: string;
+  containerClassName?: string;
   sectionClassName?: string;
   inputClassName?: string;
   gridClassName?: string;
   cardClassName?: string;
   datapointClassName?: string;
   checkboxClassName?: string;
+  gridThumbnailClassName?: string;
 }
 
 type Action =
@@ -89,7 +91,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
    imageUrl = "",
    cardFunction = null,
    parseOutput = {},
-   className = "",
+   containerClassName = "",
    sidebarClassName = "",
    sectionClassName = "",
    inputClassName = "",
@@ -97,6 +99,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
    cardClassName = "",
    datapointClassName = "",
    checkboxClassName = "",
+   gridThumbnailClassName = "",
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -128,21 +131,21 @@ const ItemSorter: React.FC<ItemSorterProps> =
   };
 
   return (
-    <div className={`${styles.container} ${className}`}>
-      <div className={`${styles.sidebar} ${sidebarClassName}`}>
+    <div className={`${containerClassName || styles.container}`}>
+      <div className={`${sidebarClassName || styles.sidebar}`}>
         <h3>Filters</h3>
         {textSearch && (
           <input
             onChange={handleSearchChange}
             placeholder="Search..."
-            className={`${styles.searchInput} ${inputClassName}`}
+            className={`${inputClassName || styles.searchInput}`}
           />)}
         {Object.keys(items[0]).map((key, index) => {
           if(imageUrl==key){
             return;
           }
           return (
-            <div key={`section-${index}`} className={`${styles.section} ${sectionClassName}`}>
+            <div key={`section-${index}`} className={`${sectionClassName || styles.sectionClassName}`}>
              <h4>{capitalizeFirstLetter(key)}</h4>
               {(() => {
                 if (rangeFields.includes(key)) {
@@ -223,6 +226,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
         gridClassName={gridClassName}
         cardClassName={cardClassName}
         datapointClassName={datapointClassName}
+        gridThumbnailClassName={gridThumbnailClassName}
       />
     </div>
   );

@@ -10,6 +10,7 @@ interface ItemSorterGridProps {
   datapointClassName?: string;
   imageUrl?:string;
   cardFunction?:Function;
+  gridThumbnailClassName?: string
 }
 const ItemSorterGrid: React.FC<ItemSorterGridProps> =
  ({ items,
@@ -17,6 +18,7 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
    gridClassName="",
    cardClassName="",
    datapointClassName="",
+   gridThumbnailClassName="",
    imageUrl="",
    parseOutput  = {},
    cardFunction=null
@@ -43,12 +45,12 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
   }
 
     return (
-        <div className={`${style.itemGrid} ${gridClassName}`}>
+        <div className={gridClassName || style.itemGrid}>
           {filteredItems.map((item, index:number) => {
             const keys = Object.keys(item);
             return (
-              <div onClick={cardFunction && (() => cardFunction(item))} className={`${style.itemCard} ${cardClassName}`} key={`item-${index}`}>
-                {keys.includes(imageUrl) && <img className="grid-thumbnail" src={item[imageUrl]} alt="" />}
+              <div onClick={cardFunction && (() => cardFunction(item))} className={cardClassName || style.itemCard} key={`item-${index}`}>
+                {keys.includes(imageUrl) && <img className={gridThumbnailClassName || style.gridThumbnail} src={item[imageUrl]} alt="" />}
                 {keys.filter(key => key !== imageUrl).map((key) => (
                   <p className={datapointClassName} key={key}>
                      <span>{capitalizeFirstLetter(key)}: </span> 

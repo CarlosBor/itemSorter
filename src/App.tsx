@@ -75,7 +75,7 @@ function App() {
   const cardFunction = (item : any) => {
     console.log(item);
   }
-  
+
   return (
     <>
       <ItemSorter 
@@ -89,12 +89,14 @@ function App() {
         cardFunction = {cardFunction}
         className="sorter-custom-container"
         sidebarClassName="sorter-custom-sidebar"
+        containerClassName="sorter-custom-container"
         sectionClassName="sorter-custom-section"
         inputClassName="sorter-custom-input"
         gridClassName="sorter-custom-grid"
         cardClassName="sorter-custom-card"
         datapointClassName="sorter-custom-datapoint"
         checkboxClassName="sorter-custom-checkbox"
+        gridThumbnailClassName="sorter-custom-grid-thumbnail"
       />
     </>
   )

@@ -1,4 +1,5 @@
 import renderBool from "../utils/renderBool";
+import styles from './SelectableProperties.module.css';
 
 interface SelectablePropertiesProps {
   items: Record<string, any>[];
@@ -24,7 +25,7 @@ const SelectableProperties:React.FC<SelectablePropertiesProps> =
   return (
     propertiesArray.map((value, index) => {
       return (
-        <label key={`label-${index}`} className={checkboxClassName}>
+        <label key={`label-${index}`} className={checkboxClassName || styles.checkbox}>
           <input
             type="checkbox"
             name={value}
