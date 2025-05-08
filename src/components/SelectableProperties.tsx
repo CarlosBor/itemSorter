@@ -6,6 +6,7 @@ interface SelectablePropertiesProps {
   onCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   sortFunction?: (a: any, b: any) => number;
   checkboxClassName: string;
+  parseOutput?: Record<string, Function>;
 }
 
 const SelectableProperties:React.FC<SelectablePropertiesProps> = 
@@ -13,7 +14,8 @@ const SelectableProperties:React.FC<SelectablePropertiesProps> =
    property,
    onCheckboxChange,
    sortFunction,
-   checkboxClassName }) => {
+   checkboxClassName,
+   parseOutput = {} }) => {
   const propertiesArray = [...new Set(items.map((item) => item[property]))];
   if(sortFunction!=null){
     propertiesArray.sort(sortFunction);
@@ -29,7 +31,9 @@ const SelectableProperties:React.FC<SelectablePropertiesProps> =
             value={value}
             onChange={onCheckboxChange} 
           />
-          <span>{renderBool(value)}</span>
+          <span>
+            {parseOutput[property] ? parseOutput[property](renderBool(value)) : renderBool(value)}
+          </span>
         </label>
       );
     })

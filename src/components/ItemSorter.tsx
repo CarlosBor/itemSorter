@@ -20,6 +20,7 @@ interface ItemSorterProps {
   explicitFields?: string[];
   textSearch?: boolean;
   imageUrl?: string;
+  parseOutput?: Record<string, Function>;
   className?: string;
   sidebarClassName?: string;
   sectionClassName?: string;
@@ -85,6 +86,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
    explicitFields = null,
    textSearch = false,
    imageUrl = "",
+   parseOutput = {},
    className = "",
    sidebarClassName = "",
    sectionClassName = "",
@@ -140,7 +142,6 @@ const ItemSorter: React.FC<ItemSorterProps> =
             <div key={`section-${index}`} className={`${styles.section} ${sectionClassName}`}>
              <h4>{capitalizeFirstLetter(key)}</h4>
               {(() => {
-
                 if (rangeFields.includes(key)) {
                   const minValue = Math.min(...items.map((item) => item[key]));
                   const maxValue = Math.max(...items.map((item) => item[key]));
@@ -196,6 +197,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
                     onCheckboxChange={handleCheckboxChange(key)}
                     //@ts-ignore
                     sortFunction={orderFields[key] || null}
+                    parseOutput={parseOutput}
                     checkboxClassName={checkboxClassName}
                   />
                 );
@@ -208,6 +210,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
         items={items} 
         filter={state}
         imageUrl={imageUrl}
+        parseOutput={parseOutput}
         gridClassName={gridClassName}
         cardClassName={cardClassName}
         datapointClassName={datapointClassName}

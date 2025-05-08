@@ -68,6 +68,10 @@ function App() {
     }
   }
 
+  const addEuro = (price:number) =>{
+    return price + "€";
+  }
+
   return (
     <>
       <ItemSorter 
@@ -76,6 +80,7 @@ function App() {
         // orderFields={{"size" : orderFunction}}
         // explicitFields = {["size", "price", "brand"]}
         // textSearch = {true}
+        // parseOutput = {{"price" : addEuro}}
         imageUrl = "imgUrl"
         className="sorter-custom-container"
         sidebarClassName="sorter-custom-sidebar"

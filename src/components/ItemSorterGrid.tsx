@@ -4,6 +4,7 @@ import renderBool from '../utils/renderBool';
 interface ItemSorterGridProps {
   items: Record<string, any>[];
   filter: Record<string, any>;
+  parseOutput?: Record<string, Function>;
   gridClassName: string;
   cardClassName: string;
   datapointClassName: string;
@@ -15,7 +16,8 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
    gridClassName="",
    cardClassName="",
    datapointClassName="",
-   imageUrl=""
+   imageUrl="",
+   parseOutput  = {}
   }) => {
   let filteredItems = items.filter((item) => {
     return Object.keys(filter).every((key) => {
@@ -46,7 +48,7 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
               <div className={`${style.itemCard} ${cardClassName}`} key={`item-${index}`}>
                 {keys.includes(imageUrl) && <img src={item[imageUrl]} alt="" />}
                 {keys.filter(key => key !== imageUrl).map((key) => (
-                  <p className={datapointClassName} key={key}> {capitalizeFirstLetter(key)} : {renderBool(item[key])}</p>
+                  <p className={datapointClassName} key={key}> {capitalizeFirstLetter(key)} : {parseOutput[key] ? parseOutput[key](renderBool(item[key])) : renderBool(item[key])}</p>
                 ))}
               </div>
             );
