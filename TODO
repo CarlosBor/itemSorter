@@ -1,4 +1,3 @@
 - Apply style with a default color or allow users to establish all styles. sorta done
 - Colors in color option
 - Handle errors in general
-- Treat data with a function before render

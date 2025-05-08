@@ -78,10 +78,10 @@ function App() {
         items={mockData}
         // rangeFields={["price"]}
         // orderFields={{"size" : orderFunction}}
-        // explicitFields = {["size", "price", "brand"]}
-        // textSearch = {true}
+        // explicitFields = {["size", "price", "brand", "imgUrl"]}
+        textSearch = {true}
         // parseOutput = {{"price" : addEuro}}
-        imageUrl = "imgUrl"
+        // imageUrl = "imgUrl"
         className="sorter-custom-container"
         sidebarClassName="sorter-custom-sidebar"
         sectionClassName="sorter-custom-section"

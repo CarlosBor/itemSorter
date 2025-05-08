@@ -131,6 +131,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
         <h3>Filters</h3>
         {textSearch && (
           <input
+            onChange={handleSearchChange}
             placeholder="Search..."
             className={`${styles.searchInput} ${inputClassName}`}
           />)}
