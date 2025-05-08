@@ -1,4 +1,4 @@
-import ItemSorter from './components/ItemSorter';
+import ItemSorter from './components/ItemSorter/ItemSorter';
 import "./styles.css";
 
 function App() {

@@ -1,6 +1,6 @@
 import style from './ItemSorterGrid.module.css';
-import capitalizeFirstLetter from '../utils/capitalizeFirst';
-import renderBool from '../utils/renderBool';
+import capitalizeFirstLetter from '../../utils/capitalizeFirst';
+import renderBool from '../../utils/renderBool';
 interface ItemSorterGridProps {
   items: Record<string, any>[];
   filter: Record<string, any>;
@@ -21,7 +21,7 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
    gridThumbnailClassName="",
    imageUrl="",
    parseOutput  = {},
-   cardFunction=null
+   cardFunction
   }) => {
   let filteredItems = items.filter((item) => {
     return Object.keys(filter).every((key) => {

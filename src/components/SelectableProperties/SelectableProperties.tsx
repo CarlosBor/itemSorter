@@ -1,4 +1,4 @@
-import renderBool from "../utils/renderBool";
+import renderBool from "../../utils/renderBool";
 import styles from './SelectableProperties.module.css';
 
 interface SelectablePropertiesProps {

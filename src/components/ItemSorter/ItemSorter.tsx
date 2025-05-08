@@ -1,7 +1,7 @@
-import SelectableProperties from './SelectableProperties';
-import ItemSorterGrid from './ItemSorterGrid';
+import SelectableProperties from '../SelectableProperties/SelectableProperties';
+import ItemSorterGrid from '../ItemSorterGrid/ItemSorterGrid';
 import { useReducer } from 'react';
-import capitalizeFirstLetter from '../utils/capitalizeFirst';
+import capitalizeFirstLetter from '../../utils/capitalizeFirst';
 import { Range } from "react-range";
 import styles from './ItemSorter.module.css';
 
@@ -89,7 +89,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
    explicitFields = null,
    textSearch = false,
    imageUrl = "",
-   cardFunction = null,
+   cardFunction,
    parseOutput = {},
    containerClassName = "",
    sidebarClassName = "",
