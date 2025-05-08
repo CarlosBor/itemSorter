@@ -138,14 +138,14 @@ const ItemSorter: React.FC<ItemSorterProps> =
           <input
             onChange={handleSearchChange}
             placeholder="Search..."
-            className={`${inputClassName || styles.searchInput}`}
+            className={`${inputClassName || styles.input}`}
           />)}
         {Object.keys(items[0]).map((key, index) => {
           if(imageUrl==key){
             return;
           }
           return (
-            <div key={`section-${index}`} className={`${sectionClassName || styles.sectionClassName}`}>
+            <div key={`section-${index}`} className={`${sectionClassName || styles.section}`}>
              <h4>{capitalizeFirstLetter(key)}</h4>
               {(() => {
                 if (rangeFields.includes(key)) {
@@ -186,7 +186,8 @@ const ItemSorter: React.FC<ItemSorterProps> =
                             ...props.style,
                             height: "42px",
                             width: "42px",
-                            backgroundColor: "#999",
+                            backgroundColor: "#007aff",
+                            color: "#eee",
                             borderRadius: "30px",
                             display: "flex",
                             justifyContent: "center",
@@ -209,7 +210,7 @@ const ItemSorter: React.FC<ItemSorterProps> =
                     //@ts-ignore
                     sortFunction={orderFields[key] || null}
                     parseOutput={parseOutput}
-                    checkboxClassName={checkboxClassName}
+                    checkboxClassName={checkboxClassName || styles.checkbox}
                   />
                 );
               })()}

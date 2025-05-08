@@ -49,10 +49,10 @@ const ItemSorterGrid: React.FC<ItemSorterGridProps> =
           {filteredItems.map((item, index:number) => {
             const keys = Object.keys(item);
             return (
-              <div onClick={cardFunction && (() => cardFunction(item))} className={cardClassName || style.itemCard} key={`item-${index}`}>
+              <div onClick={cardFunction && (() => cardFunction(item))} className={cardClassName || style.card} key={`item-${index}`}>
                 {keys.includes(imageUrl) && <img className={gridThumbnailClassName || style.gridThumbnail} src={item[imageUrl]} alt="" />}
                 {keys.filter(key => key !== imageUrl).map((key) => (
-                  <p className={datapointClassName} key={key}>
+                  <p className={datapointClassName || style.datapoint} key={key}>
                      <span>{capitalizeFirstLetter(key)}: </span> 
                      <span>{parseOutput[key] ? parseOutput[key](renderBool(item[key])) : renderBool(item[key])}</span>
                   </p>
