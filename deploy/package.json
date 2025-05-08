@@ -1,0 +1,31 @@
+{
+  "name": "itemsorter",
+  "version": "0.1.1",
+  "description": "Components to display and filter objects",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "Yes, you can leave the **test** command blank or set it to `\"echo \\\"No tests specified\\\" && exit 1\"` as a placeholder."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarlosBor/itemSorter.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Carlos Borja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CarlosBor/itemSorter/issues"
+  },
+  "homepage": "https://github.com/CarlosBor/itemSorter#readme",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "vite": "^6.3.5"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-range": "^1.10.0"
+  }
+}
