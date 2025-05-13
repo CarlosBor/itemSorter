@@ -35,7 +35,8 @@ The most simple usage is:
 <ItemSorter items={mockPlants}/>
 ```
 Which would load the component with default behavior and css like so:
-[Default example](./examples/itemsortExample1.png)
+
+![Default example](./examples/itemsortExample1.png)
 
 ### Optional Parameters
 
@@ -47,7 +48,8 @@ An array of strings which must be the keys of numerical values, like so:
 rangeFields={["price", "height"]}
 ```
 Makes it so rather than toggles, the filter displays a range selector, like so:
-[rangeField example](./examples/itemsortExample2.png)
+
+![rangeField example](./examples/itemsortExample2.png)
 
 #### orderFields
 An object of key:function pairs that can order the fields of the objects, like so:
@@ -65,7 +67,8 @@ An object of key:function pairs that can order the fields of the objects, like s
 orderFields={{"size" : orderFunction}}
 ```
 The values will be sorted in the filter like so:
-[sorted properties](./examples/itemsortExample3.png)
+
+![sorted properties](./examples/itemsortExample3.png)
 
 #### explicitFields
 An array of strings, referring to different attributes of the object
@@ -80,7 +83,8 @@ A string which ought to be a url field in the object, to be shown at the top of 
 imageUrl = "imgUrl"
 ```
 Will proceed to display as so:
-[cards with images](./examples/itemsortExample4.png)
+
+![cards with images](./examples/itemsortExample4.png)
 
 
 #### textSearch
