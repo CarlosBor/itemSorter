@@ -1,6 +1,6 @@
 {
   "name": "itemsorter",
-  "version": "0.1.1",
+  "version": "0.1.6",
   "description": "Components to display and filter objects",
   "main": "src/index.ts",
   "scripts": {
